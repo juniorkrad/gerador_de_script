@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Provisionamento de ONTs</title>
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <link rel="icon" type="image/png" href="favicon.png">
+
+    </head>
+<body>
+
+    <header id="main-header"></header>
+
+    <main>
+        <div class="container">
+            <div class="form-section">
+                <h1>VLAN 100</h1>
+                <form id="ontForm">
+                    <div>
+                        <label for="olt">OLT:</label>
+                        <select id="olt" name="olt">
+                            <option value="">Selecione a OLT</option>                            
+                            <option value="HEL1">HEL1</option>
+                            <option value="HEL2">HEL2</option>
+                            <option value="MGP">MGP</option>
+                            <option value="PQA1">PQA1</option>
+                            <option value="PSV1">PSV1</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="slot">SLOT:</label>
+                        <select id="slot" name="slot">
+                            <option value="">Selecione o Slot</option>
+                            <script>
+                                for (let i = 1; i <= 8; i++) {
+                                    document.write(`<option value="${i}">${i}</option>`);
+                                }
+                            </script>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="porta_pon">PORTA_PON:</label>
+                        <select id="porta_pon" name="porta_pon">
+                            <option value="">Selecione a Porta PON</option>
+                            <script>
+                                for (let i = 1; i <= 16; i++) {
+                                    document.write(`<option value="${i}">${i}</option>`);
+                                }
+                            </script>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="posicao">POSICAO:</label>
+                        <select id="posicao" name="posicao">
+                            <option value="">Selecione a Posição</option>
+                            <script>
+                                for (let i = 1; i <= 128; i++) {
+                                    document.write(`<option value="${i}">${i}</option>`);
+                                }
+                            </script>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="card_veip">CARD_VEIP:</label>
+                        <select id="card_veip" name="card_veip">
+                            <option value="">Selecione o Card VEIP</option>
+                            <option value="14">14</option>
+                            <option value="7">7</option>
+                            <option value="1">1</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="fabricante">FABRICANTE:</label>
+                        <select id="fabricante" name="fabricante">
+                            <option value="">Selecione o Fabricante</option>
+                            <option value="ALCL">ALCL:</option>
+                            <option value="ASKY">ASKY:</option>
+                            <option value="CIOT">CIOT:</option>
+                            <option value="FRKW">FRKW:</option>
+                            <option value="GPON">GPON:</option>
+                            <option value="HWTC">HWTC:</option>
+                            <option value="INVP">INVP:</option>
+                            <option value="MSTC">MSTC:</option>
+                            <option value="NBEL">NBEL:</option>
+                            <option value="PRKS">PRKS:</option>
+                            <option value="SHLN">SHLN:</option>
+                            <option value="TDTC">TDTC:</option>
+                            <option value="TLCM">TLCM:</option>
+                            <option value="VSOL">VSOL:</option>
+                            <option value="YHTC">YHTC:</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="serial_gpon">SERIAL_GPON:</label>
+                        <input type="text" id="serial_gpon" name="serial_gpon" required>
+                    </div>
+
+                    <div>
+                        <label for="vlan">VLAN:</label>
+                        <select id="vlan" name="vlan" required>
+                            <option value="">Selecione a OLT primeiro</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="circuito">CIRCUITO:</label>
+                        <input type="text" id="circuito" name="circuito" required>
+                    </div>
+
+                    <div>
+                        <label for="cto">CTO:</label>
+                        <input type="text" id="cto" name="cto" required>
+                    </div>
+
+                    <div>
+                        <label for="cod">COD:</label>
+                        <input type="text" id="cod" name="cod" required>
+                    </div>
+
+                    <div class="button-group">
+                        <button type="button" class="primary" onclick="generateCode()">Gerar Código</button>
+                        <button type="button" class="secondary" onclick="clearForm()">Limpar</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="code-section">
+                <h1>Código Gerado</h1>
+                <textarea id="generatedCode" readonly></textarea>
+                <button type="button" class="primary" onclick="copyCode()">Copiar Código</button>
+            </div>
+        </div>
+    </main>
+    
+    <footer id="main-footer"></footer>
+
+    <script src="layout.js"></script>
+
+    <script>
+        const vlanData = {
+            MGP: [
+                { placa: 1, porta: 1, vlan: 727 }, { placa: 1, porta: 2, vlan: 728 }, { placa: 1, porta: 3, vlan: 729 }, { placa: 1, porta: 4, vlan: 730 }, { placa: 1, porta: 5, vlan: 731 }, { placa: 1, porta: 6, vlan: 732 }, { placa: 1, porta: 7, vlan: 733 }, { placa: 1, porta: 8, vlan: 734 }, { placa: 1, porta: 9, vlan: 735 }, { placa: 1, porta: 10, vlan: 736 }, { placa: 1, porta: 11, vlan: 737 }, { placa: 1, porta: 12, vlan: 738 }, { placa: 1, porta: 13, vlan: 739 }, { placa: 1, porta: 14, vlan: 740 }, { placa: 1, porta: 15, vlan: 741 }, { placa: 1, porta: 16, vlan: 742 },
+                { placa: 2, porta: 1, vlan: 743 }, { placa: 2, porta: 2, vlan: 744 }, { placa: 2, porta: 3, vlan: 745 }, { placa: 2, porta: 4, vlan: 746 }, { placa: 2, porta: 5, vlan: 747 }, { placa: 2, porta: 6, vlan: 748 }, { placa: 2, porta: 7, vlan: 749 }, { placa: 2, porta: 8, vlan: 750 }, { placa: 2, porta: 9, vlan: 751 }, { placa: 2, porta: 10, vlan: 752 }, { placa: 2, porta: 11, vlan: 753 }, { placa: 2, porta: 12, vlan: 754 }, { placa: 2, porta: 13, vlan: 755 }, { placa: 2, porta: 14, vlan: 756 }, { placa: 2, porta: 15, vlan: 757 }, { placa: 2, porta: 16, vlan: 758 },
+                { placa: 3, porta: 1, vlan: 759 }, { placa: 3, porta: 2, vlan: 760 }, { placa: 3, porta: 3, vlan: 761 }, { placa: 3, porta: 4, vlan: 762 }, { placa: 3, porta: 5, vlan: 763 }, { placa: 3, porta: 6, vlan: 764 }, { placa: 3, porta: 7, vlan: 765 }, { placa: 3, porta: 8, vlan: 766 }, { placa: 3, porta: 9, vlan: 767 }, { placa: 3, porta: 10, vlan: 768 }, { placa: 3, porta: 11, vlan: 769 }, { placa: 3, porta: 12, vlan: 770 }, { placa: 3, porta: 13, vlan: 771 }, { placa: 3, porta: 14, vlan: 772 }, { placa: 3, porta: 15, vlan: 773 }, { placa: 3, porta: 16, vlan: 774 },
+                { placa: 4, porta: 1, vlan: 775 }, { placa: 4, porta: 2, vlan: 776 }, { placa: 4, porta: 3, vlan: 777 }, { placa: 4, porta: 4, vlan: 778 }, { placa: 4, porta: 5, vlan: 779 }, { placa: 4, porta: 6, vlan: 780 }, { placa: 4, porta: 7, vlan: 781 }, { placa: 4, porta: 8, vlan: 782 }, { placa: 4, porta: 9, vlan: 783 }, { placa: 4, porta: 10, vlan: 784 }, { placa: 4, porta: 11, vlan: 785 }, { placa: 4, porta: 12, vlan: 786 }, { placa: 4, porta: 13, vlan: 787 }, { placa: 4, porta: 14, vlan: 788 }, { placa: 4, porta: 15, vlan: 789 }, { placa: 4, porta: 16, vlan: 790 },
+                { placa: 5, porta: 1, vlan: 791 }, { placa: 5, porta: 2, vlan: 792 }, { placa: 5, porta: 3, vlan: 793 }, { placa: 5, porta: 4, vlan: 794 }, { placa: 5, porta: 5, vlan: 795 }, { placa: 5, porta: 6, vlan: 796 }, { placa: 5, porta: 7, vlan: 797 }, { placa: 5, porta: 8, vlan: 798 }, { placa: 5, porta: 9, vlan: 799 }, { placa: 5, porta: 10, vlan: 800 }, { placa: 5, porta: 11, vlan: 801 }, { placa: 5, porta: 12, vlan: 802 }, { placa: 5, porta: 13, vlan: 803 }, { placa: 5, porta: 14, vlan: 804 }, { placa: 5, porta: 15, vlan: 805 }, { placa: 5, porta: 16, vlan: 806 },
+            ],
+            HEL1: [
+                { placa: 1, porta: 1, vlan: 600 }, { placa: 1, porta: 2, vlan: 601 }, { placa: 1, porta: 3, vlan: 602 }, { placa: 1, porta: 4, vlan: 603 }, { placa: 1, porta: 5, vlan: 604 }, { placa: 1, porta: 6, vlan: 605 }, { placa: 1, porta: 7, vlan: 606 }, { placa: 1, porta: 8, vlan: 607 }, { placa: 1, porta: 9, vlan: 608 }, { placa: 1, porta: 10, vlan: 609 }, { placa: 1, porta: 11, vlan: 610 }, { placa: 1, porta: 12, vlan: 611 }, { placa: 1, porta: 13, vlan: 612 }, { placa: 1, porta: 14, vlan: 613 }, { placa: 1, porta: 15, vlan: 614 }, { placa: 1, porta: 16, vlan: 615 },
+                { placa: 2, porta: 1, vlan: 616 }, { placa: 2, porta: 2, vlan: 617 }, { placa: 2, porta: 3, vlan: 618 }, { placa: 2, porta: 4, vlan: 619 }, { placa: 2, porta: 5, vlan: 620 }, { placa: 2, porta: 6, vlan: 621 }, { placa: 2, porta: 7, vlan: 622 }, { placa: 2, porta: 8, vlan: 623 }, { placa: 2, porta: 9, vlan: 624 }, { placa: 2, porta: 10, vlan: 625 }, { placa: 2, porta: 11, vlan: 626 }, { placa: 2, porta: 12, vlan: 627 }, { placa: 2, porta: 13, vlan: 628 }, { placa: 2, porta: 14, vlan: 629 }, { placa: 2, porta: 15, vlan: 630 }, { placa: 2, porta: 16, vlan: 631 },
+                { placa: 3, porta: 1, vlan: 700 }, { placa: 3, porta: 2, vlan: 701 }, { placa: 3, porta: 3, vlan: 702 }, { placa: 3, porta: 4, vlan: 703 }, { placa: 3, porta: 5, vlan: 704 }, { placa: 3, porta: 6, vlan: 705 }, { placa: 3, porta: 7, vlan: 706 }, { placa: 3, porta: 8, vlan: 707 }, { placa: 3, porta: 9, vlan: 708 }, { placa: 3, porta: 10, vlan: 709 }, { placa: 3, porta: 11, vlan: 710 }, { placa: 3, porta: 12, vlan: 711 }, { placa: 3, porta: 13, vlan: 712 }, { placa: 3, porta: 14, vlan: 713 }, { placa: 3, porta: 15, vlan: 714 }, { placa: 3, porta: 16, vlan: 715 },
+                { placa: 4, porta: 1, vlan: 716 }, { placa: 4, porta: 2, vlan: 717 }, { placa: 4, porta: 3, vlan: 718 }, { placa: 4, porta: 4, vlan: 719 }, { placa: 4, porta: 5, vlan: 720 }, { placa: 4, porta: 6, vlan: 721 }, { placa: 4, porta: 7, vlan: 722 }, { placa: 4, porta: 8, vlan: 723 }, { placa: 4, porta: 9, vlan: 724 }, { placa: 4, porta: 10, vlan: 725 }, { placa: 4, porta: 11, vlan: 726 }, { placa: 4, porta: 12, vlan: 727 }, { placa: 4, porta: 13, vlan: 728 }, { placa: 4, porta: 14, vlan: 729 }, { placa: 4, porta: 15, vlan: 730 }, { placa: 4, porta: 16, vlan: 731 },
+                { placa: 5, porta: 1, vlan: 800 }, { placa: 5, porta: 2, vlan: 801 }, { placa: 5, porta: 3, vlan: 802 }, { placa: 5, porta: 4, vlan: 803 }, { placa: 5, porta: 5, vlan: 804 }, { placa: 5, porta: 6, vlan: 805 }, { placa: 5, porta: 7, vlan: 806 }, { placa: 5, porta: 8, vlan: 807 }, { placa: 5, porta: 9, vlan: 808 }, { placa: 5, porta: 10, vlan: 809 }, { placa: 5, porta: 11, vlan: 810 }, { placa: 5, porta: 12, vlan: 811 }, { placa: 5, porta: 13, vlan: 812 }, { placa: 5, porta: 14, vlan: 813 }, { placa: 5, porta: 15, vlan: 814 }, { placa: 5, porta: 16, vlan: 815 },
+                { placa: 6, porta: 1, vlan: 816 }, { placa: 6, porta: 2, vlan: 817 }, { placa: 6, porta: 3, vlan: 818 }, { placa: 6, porta: 4, vlan: 819 }, { placa: 6, porta: 5, vlan: 820 }, { placa: 6, porta: 6, vlan: 821 }, { placa: 6, porta: 7, vlan: 822 }, { placa: 6, porta: 8, vlan: 823 }, { placa: 6, porta: 9, vlan: 824 }, { placa: 6, porta: 10, vlan: 825 }, { placa: 6, porta: 11, vlan: 826 }, { placa: 6, porta: 12, vlan: 827 }, { placa: 6, porta: 13, vlan: 828 }, { placa: 6, porta: 14, vlan: 829 }, { placa: 6, porta: 15, vlan: 830 }, { placa: 6, porta: 16, vlan: 831 },
+                { placa: 7, porta: 1, vlan: 900 }, { placa: 7, porta: 2, vlan: 901 }, { placa: 7, porta: 3, vlan: 902 }, { placa: 7, porta: 4, vlan: 903 }, { placa: 7, porta: 5, vlan: 904 }, { placa: 7, porta: 6, vlan: 905 }, { placa: 7, porta: 7, vlan: 906 }, { placa: 7, porta: 8, vlan: 907 }, { placa: 7, porta: 9, vlan: 908 }, { placa: 7, porta: 10, vlan: 909 }, { placa: 7, porta: 11, vlan: 910 }, { placa: 7, porta: 12, vlan: 911 }, { placa: 7, porta: 13, vlan: 912 }, { placa: 7, porta: 14, vlan: 913 }, { placa: 7, porta: 15, vlan: 914 }, { placa: 7, porta: 16, vlan: 915 },
+                { placa: 8, porta: 1, vlan: 916 }, { placa: 8, porta: 2, vlan: 917 }, { placa: 8, porta: 3, vlan: 918 }, { placa: 8, porta: 4, vlan: 919 }, { placa: 8, porta: 5, vlan: 920 }, { placa: 8, porta: 6, vlan: 921 }, { placa: 8, porta: 7, vlan: 922 }, { placa: 8, porta: 8, vlan: 923 }, { placa: 8, porta: 9, vlan: 924 }, { placa: 8, porta: 10, vlan: 925 }, { placa: 8, porta: 11, vlan: 926 }, { placa: 8, porta: 12, vlan: 927 }, { placa: 8, porta: 13, vlan: 928 }, { placa: 8, porta: 14, vlan: 929 }, { placa: 8, porta: 15, vlan: 930 }, { placa: 8, porta: 16, vlan: 931 },
+            ],
+            HEL2: [
+                { placa: 1, porta: 1, vlan: 101 }, { placa: 1, porta: 2, vlan: 102 }, { placa: 1, porta: 3, vlan: 103 }, { placa: 1, porta: 4, vlan: 104 }, { placa: 1, porta: 5, vlan: 105 }, { placa: 1, porta: 6, vlan: 106 }, { placa: 1, porta: 7, vlan: 107 }, { placa: 1, porta: 8, vlan: 108 }, { placa: 1, porta: 9, vlan: 109 }, { placa: 1, porta: 10, vlan: 110 }, { placa: 1, porta: 11, vlan: 111 }, { placa: 1, porta: 12, vlan: 112 }, { placa: 1, porta: 13, vlan: 113 }, { placa: 1, porta: 14, vlan: 114 }, { placa: 1, porta: 15, vlan: 115 }, { placa: 1, porta: 16, vlan: 116 },
+                { placa: 2, porta: 1, vlan: 117 }, { placa: 2, porta: 2, vlan: 118 }, { placa: 2, porta: 3, vlan: 119 }, { placa: 2, porta: 4, vlan: 120 }, { placa: 2, porta: 5, vlan: 121 }, { placa: 2, porta: 6, vlan: 122 }, { placa: 2, porta: 7, vlan: 123 }, { placa: 2, porta: 8, vlan: 124 }, { placa: 2, porta: 9, vlan: 125 }, { placa: 2, porta: 10, vlan: 126 }, { placa: 2, porta: 11, vlan: 127 }, { placa: 2, porta: 12, vlan: 128 }, { placa: 2, porta: 13, vlan: 129 }, { placa: 2, porta: 14, vlan: 130 }, { placa: 2, porta: 15, vlan: 131 }, { placa: 2, porta: 16, vlan: 132 },
+                { placa: 3, porta: 1, vlan: 133 }, { placa: 3, porta: 2, vlan: 134 }, { placa: 3, porta: 3, vlan: 135 }, { placa: 3, porta: 4, vlan: 136 }, { placa: 3, porta: 5, vlan: 137 }, { placa: 3, porta: 6, vlan: 138 }, { placa: 3, porta: 7, vlan: 139 }, { placa: 3, porta: 8, vlan: 140 }, { placa: 3, porta: 9, vlan: 141 }, { placa: 3, porta: 10, vlan: 142 }, { placa: 3, porta: 11, vlan: 143 }, { placa: 3, porta: 12, vlan: 144 }, { placa: 3, porta: 13, vlan: 145 }, { placa: 3, porta: 14, vlan: 146 }, { placa: 3, porta: 15, vlan: 147 }, { placa: 3, porta: 16, vlan: 148 },
+                { placa: 4, porta: 1, vlan: 149 }, { placa: 4, porta: 2, vlan: 150 }, { placa: 4, porta: 3, vlan: 151 }, { placa: 4, porta: 4, vlan: 152 }, { placa: 4, porta: 5, vlan: 153 }, { placa: 4, porta: 6, vlan: 154 }, { placa: 4, porta: 7, vlan: 155 }, { placa: 4, porta: 8, vlan: 156 }, { placa: 4, porta: 9, vlan: 157 }, { placa: 4, porta: 10, vlan: 158 }, { placa: 4, porta: 11, vlan: 159 }, { placa: 4, porta: 12, vlan: 160 }, { placa: 4, porta: 13, vlan: 161 }, { placa: 4, porta: 14, vlan: 162 }, { placa: 4, porta: 15, vlan: 163 }, { placa: 4, porta: 16, vlan: 164 },
+            ],
+            PQA1: [
+                { placa: 1, porta: 1, vlan: 920 }, { placa: 1, porta: 2, vlan: 921 }, { placa: 1, porta: 3, vlan: 922 }, { placa: 1, porta: 4, vlan: 923 }, { placa: 1, porta: 5, vlan: 924 }, { placa: 1, porta: 6, vlan: 925 }, { placa: 1, porta: 7, vlan: 926 }, { placa: 1, porta: 8, vlan: 927 }, { placa: 1, porta: 9, vlan: 928 }, { placa: 1, porta: 10, vlan: 929 }, { placa: 1, porta: 11, vlan: 930 }, { placa: 1, porta: 12, vlan: 931 }, { placa: 1, porta: 13, vlan: 932 }, { placa: 1, porta: 14, vlan: 933 }, { placa: 1, porta: 15, vlan: 934 }, { placa: 1, porta: 16, vlan: 935 },
+                { placa: 2, porta: 1, vlan: 936 }, { placa: 2, porta: 2, vlan: 937 }, { placa: 2, porta: 3, vlan: 938 }, { placa: 2, porta: 4, vlan: 939 }, { placa: 2, porta: 5, vlan: 940 }, { placa: 2, porta: 6, vlan: 941 }, { placa: 2, porta: 7, vlan: 942 }, { placa: 2, porta: 8, vlan: 943 }, { placa: 2, porta: 9, vlan: 944 }, { placa: 2, porta: 10, vlan: 945 }, { placa: 2, porta: 11, vlan: 946 }, { placa: 2, porta: 12, vlan: 947 }, { placa: 2, porta: 13, vlan: 948 }, { placa: 2, porta: 14, vlan: 949 }, { placa: 2, porta: 15, vlan: 950 }, { placa: 2, porta: 16, vlan: 951 },
+                { placa: 3, porta: 1, vlan: 952 }, { placa: 3, porta: 2, vlan: 953 }, { placa: 3, porta: 3, vlan: 954 }, { placa: 3, porta: 4, vlan: 955 }, { placa: 3, porta: 5, vlan: 956 }, { placa: 3, porta: 6, vlan: 957 }, { placa: 3, porta: 7, vlan: 958 }, { placa: 3, porta: 8, vlan: 959 }, { placa: 3, porta: 9, vlan: 960 }, { placa: 3, porta: 10, vlan: 961 }, { placa: 3, porta: 11, vlan: 962 }, { placa: 3, porta: 12, vlan: 963 }, { placa: 3, porta: 13, vlan: 964 }, { placa: 3, porta: 14, vlan: 965 }, { placa: 3, porta: 15, vlan: 966 }, { placa: 3, porta: 16, vlan: 967 },
+                { placa: 4, porta: 1, vlan: 968 }, { placa: 4, porta: 2, vlan: 969 }, { placa: 4, porta: 3, vlan: 970 }, { placa: 4, porta: 4, vlan: 971 }, { placa: 4, porta: 5, vlan: 972 }, { placa: 4, porta: 6, vlan: 973 }, { placa: 4, porta: 7, vlan: 974 }, { placa: 4, porta: 8, vlan: 975 }, { placa: 4, porta: 9, vlan: 976 }, { placa: 4, porta: 10, vlan: 977 }, { placa: 4, porta: 11, vlan: 978 }, { placa: 4, porta: 12, vlan: 979 }, { placa: 4, porta: 13, vlan: 980 }, { placa: 4, porta: 14, vlan: 981 }, { placa: 4, porta: 15, vlan: 982 }, { placa: 4, porta: 16, vlan: 983 },
+                { placa: 5, porta: 1, vlan: 600 }, { placa: 5, porta: 2, vlan: 601 }, { placa: 5, porta: 3, vlan: 602 }, { placa: 5, porta: 4, vlan: 603 }, { placa: 5, porta: 5, vlan: 604 }, { placa: 5, porta: 6, vlan: 605 }, { placa: 5, porta: 7, vlan: 606 }, { placa: 5, porta: 8, vlan: 607 }, { placa: 5, porta: 9, vlan: 608 }, { placa: 5, porta: 10, vlan: 609 }, { placa: 5, porta: 11, vlan: 610 }, { placa: 5, porta: 12, vlan: 611 }, { placa: 5, porta: 13, vlan: 612 }, { placa: 5, porta: 14, vlan: 613 }, { placa: 5, porta: 15, vlan: 614 }, { placa: 5, porta: 16, vlan: 615 },
+                { placa: 6, porta: 1, vlan: 616 }, { placa: 6, porta: 2, vlan: 617 }, { placa: 6, porta: 3, vlan: 618 }, { placa: 6, porta: 4, vlan: 619 }, { placa: 6, porta: 5, vlan: 620 }, { placa: 6, porta: 6, vlan: 621 }, { placa: 6, porta: 7, vlan: 622 }, { placa: 6, porta: 8, vlan: 623 }, { placa: 6, porta: 9, vlan: 624 }, { placa: 6, porta: 10, vlan: 625 }, { placa: 6, porta: 11, vlan: 626 }, { placa: 6, porta: 12, vlan: 627 }, { placa: 6, porta: 13, vlan: 628 }, { placa: 6, porta: 14, vlan: 629 }, { placa: 6, porta: 15, vlan: 630 }, { placa: 6, porta: 16, vlan: 631 },
+                { placa: 7, porta: 1, vlan: 700 }, { placa: 7, porta: 2, vlan: 701 }, { placa: 7, porta: 3, vlan: 702 }, { placa: 7, porta: 4, vlan: 703 }, { placa: 7, porta: 5, vlan: 704 }, { placa: 7, porta: 6, vlan: 705 }, { placa: 7, porta: 7, vlan: 706 }, { placa: 7, porta: 8, vlan: 707 }, { placa: 7, porta: 9, vlan: 708 }, { placa: 7, porta: 10, vlan: 709 }, { placa: 7, porta: 11, vlan: 710 }, { placa: 7, porta: 12, vlan: 711 }, { placa: 7, porta: 13, vlan: 712 }, { placa: 7, porta: 14, vlan: 713 }, { placa: 7, porta: 15, vlan: 714 }, { placa: 7, porta: 16, vlan: 715 },
+                { placa: 8, porta: 1, vlan: 716 }, { placa: 8, porta: 2, vlan: 717 }, { placa: 8, porta: 3, vlan: 718 }, { placa: 8, porta: 4, vlan: 719 }, { placa: 8, porta: 5, vlan: 720 }, { placa: 8, porta: 6, vlan: 721 }, { placa: 8, porta: 7, vlan: 722 }, { placa: 8, porta: 8, vlan: 723 }, { placa: 8, porta: 9, vlan: 724 }, { placa: 8, porta: 10, vlan: 725 }, { placa: 8, porta: 11, vlan: 726 }, { placa: 8, porta: 12, vlan: 727 }, { placa: 8, porta: 13, vlan: 728 }, { placa: 8, porta: 14, vlan: 729 }, { placa: 8, porta: 15, vlan: 730 }, { placa: 8, porta: 16, vlan: 731 },
+            ],
+            PSV1: [
+                { placa: 1, porta: 1, vlan: 111 }, { placa: 1, porta: 2, vlan: 112 }, { placa: 1, porta: 3, vlan: 113 }, { placa: 1, porta: 4, vlan: 114 }, { placa: 1, porta: 5, vlan: 121 }, { placa: 1, porta: 6, vlan: 122 }, { placa: 1, porta: 7, vlan: 123 }, { placa: 1, porta: 8, vlan: 124 }, { placa: 1, porta: 9, vlan: 211 }, { placa: 1, porta: 10, vlan: 212 }, { placa: 1, porta: 11, vlan: 213 }, { placa: 1, porta: 12, vlan: 214 }, { placa: 1, porta: 13, vlan: 221 }, { placa: 1, porta: 14, vlan: 222 }, { placa: 1, porta: 15, vlan: 223 }, { placa: 1, porta: 16, vlan: 224 },
+                { placa: 2, porta: 1, vlan: 311 }, { placa: 2, porta: 2, vlan: 312 }, { placa: 2, porta: 3, vlan: 313 }, { placa: 2, porta: 4, vlan: 314 }, { placa: 2, porta: 5, vlan: 321 }, { placa: 2, porta: 6, vlan: 322 }, { placa: 2, porta: 7, vlan: 323 }, { placa: 2, porta: 8, vlan: 324 }, { placa: 2, porta: 9, vlan: 411 }, { placa: 2, porta: 10, vlan: 412 }, { placa: 2, porta: 11, vlan: 413 }, { placa: 2, porta: 12, vlan: 414 }, { placa: 2, porta: 13, vlan: 421 }, { placa: 2, porta: 14, vlan: 422 }, { placa: 2, porta: 15, vlan: 423 }, { placa: 2, porta: 16, vlan: 424 },
+                { placa: 3, porta: 1, vlan: 511 }, { placa: 3, porta: 2, vlan: 512 }, { placa: 3, porta: 3, vlan: 513 }, { placa: 3, porta: 4, vlan: 514 }, { placa: 3, porta: 5, vlan: 521 }, { placa: 3, porta: 6, vlan: 522 }, { placa: 3, porta: 7, vlan: 523 }, { placa: 3, porta: 8, vlan: 524 },
+                { placa: 4, porta: 1, vlan: 711 }, { placa: 4, porta: 2, vlan: 712 }, { placa: 4, porta: 3, vlan: 713 }, { placa: 4, porta: 4, vlan: 714 }, { placa: 4, porta: 5, vlan: 715 }, { placa: 4, porta: 6, vlan: 716 }, { placa: 4, porta: 7, vlan: 717 }, { placa: 4, porta: 8, vlan: 718 }, { placa: 4, porta: 9, vlan: 719 }, { placa: 4, porta: 10, vlan: 720 }, { placa: 4, porta: 11, vlan: 721 }, { placa: 4, porta: 12, vlan: 722 }, { placa: 4, porta: 13, vlan: 723 }, { placa: 4, porta: 14, vlan: 724 }, { placa: 4, porta: 15, vlan: 725 }, { placa: 4, porta: 16, vlan: 726 },
+            ],
+        };
+
+        document.getElementById('olt').addEventListener('change', updateVLANs);
+        document.getElementById('slot').addEventListener('change', updateVLANs);
+        document.getElementById('porta_pon').addEventListener('change', updateVLANs);
+
+        function updateVLANs() {
+            const olt = document.getElementById('olt').value;
+            const slot = parseInt(document.getElementById('slot').value);
+            const portaPon = parseInt(document.getElementById('porta_pon').value);
+            const vlanSelect = document.getElementById('vlan');
+            vlanSelect.innerHTML = '<option value="">Selecione a VLAN</option>';
+
+            if (olt && !isNaN(slot) && !isNaN(portaPon) && vlanData[olt]) {
+                const filteredVlans = vlanData[olt].filter(
+                    v => v.placa === slot && v.porta === portaPon
+                );
+
+                if (filteredVlans.length > 0) {
+                    filteredVlans.forEach(v => {
+                        const option = document.createElement('option');
+                        option.value = v.vlan;
+                        option.textContent = v.vlan;
+                        vlanSelect.appendChild(option);
+                    });
+                } else {
+                    vlanSelect.innerHTML = '<option value="">Nenhuma VLAN encontrada para esta combinação</option>';
+                }
+            } else {
+                vlanSelect.innerHTML = '<option value="">Selecione OLT, Slot e Porta PON</option>';
+            }
+        }
+
+        function generateCode() {
+            const olt = document.getElementById('olt').value;
+            const slot = document.getElementById('slot').value;
+            const portaPon = document.getElementById('porta_pon').value;
+            const posicao = document.getElementById('posicao').value;
+            const cardVeip = document.getElementById('card_veip').value;
+            const fabricante = document.getElementById('fabricante').value;
+            const serialGpon = document.getElementById('serial_gpon').value;
+            const vlan = document.getElementById('vlan').value;
+            const circuito = document.getElementById('circuito').value;
+            const cto = document.getElementById('cto').value;
+            const cod = document.getElementById('cod').value;
+
+            // Validação simples
+            if (!olt || !slot || !portaPon || !posicao || !cardVeip || !fabricante || !serialGpon || !vlan || !circuito || !cto || !cod) {
+                alert('Por favor, preencha todos os campos do formulário.');
+                return;
+            }
+
+            const code = `configure equipment ont interface 1/1/${slot}/${portaPon}/${posicao} sw-ver-pland disabled sernum ${fabricante}:${serialGpon} cvlantrans-mode local fec-up enable enable-aes enable voip-allowed veip desc1 C${circuito}-CT${cto} desc2 COD.${cod}
+configure equipment ont interface 1/1/${slot}/${portaPon}/${posicao} admin-state up
+configure equipment ont slot 1/1/${slot}/${portaPon}/${posicao}/${cardVeip} planned-card-type veip plndnumdataports 1 plndnumvoiceports 0
+configure qos interface ont:1/1/${slot}/${portaPon}/${posicao} us-num-queue 4
+configure interface port uni:1/1/${slot}/${portaPon}/${posicao}/${cardVeip}/1 admin-up link-updown-trap
+configure veip ont 1/1/${slot}/${portaPon}/${posicao}/${cardVeip}/1 domain-name VEIP1
+configure veip ont 1/1/${slot}/${portaPon}/${posicao}/${cardVeip}/1 admin-state up
+configure qos interface 1/1/${slot}/${portaPon}/${posicao}/${cardVeip}/1 queue 0 priority 5 weight 0 shaper-profile name:HSI_1G_DOWN
+configure qos interface 1/1/${slot}/${portaPon}/${posicao}/${cardVeip}/1 upstream-queue 0 priority 1 bandwidth-profile name:HSI_1G_UP
+configure bridge port 1/1/${slot}/${portaPon}/${posicao}/${cardVeip}/1 max-unicast-mac 4
+configure bridge port 1/1/${slot}/${portaPon}/${posicao}/${cardVeip}/1 vlan-id 100 tag single-tagged l2fwder-vlan ${vlan} vlan-scope local
+exit all
+admin save
+admin software-mngt ihub database save-protected
+exit all
+show equipment ont status pon 1/1/${slot}/${portaPon} | match exact:${serialGpon}
+show equipment ont status pon 1/1/${slot}/${portaPon} | match exact:${serialGpon}
+        `;
+
+            document.getElementById('generatedCode').value = code;
+        }
+
+        function clearForm() {
+            document.getElementById('ontForm').reset();
+            document.getElementById('generatedCode').value = '';
+            // Reinicia a seleção de VLANs
+            const vlanSelect = document.getElementById('vlan');
+            vlanSelect.innerHTML = '<option value="">Selecione a OLT primeiro</option>';
+        }
+
+        function copyCode() {
+            const generatedCode = document.getElementById('generatedCode');
+            generatedCode.select();
+            generatedCode.setSelectionRange(0, 99999); // Para mobile
+            document.execCommand('copy');
+            alert('Código copiado para a área de transferência!');
+        }
+
+        // Inicializa as VLANs ao carregar a página
+        updateVLANs();
+    </script>
+</body>
+</html>

@@ -1,0 +1,385 @@
+/* 1. IMPORTAÇÕES E VARIÁVEIS (ROOT) */
+
+/* --- ALTERADO --- Importa a fonte Montserrat */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap');
+
+/* Importa a fonte Fira Code (para o script) */
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400&display=swap');
+
+
+:root {
+    /* Paleta de Cores Tonal (Tema Escuro baseado no seu Roxo) 
+    */
+
+    /* Cor de fundo principal (a mais escura) */
+    --color-surface: #67079f; /* Sua cor principal, agora como fundo */
+    --color-on-surface: #FFFFFF; /* Texto principal (branco) */
+    
+    /* Cor das "camadas" (Header/Footer/Cards) - Um pouco mais clara que o fundo */
+    --color-surface-variant: #7F38B2; /* Um roxo levemente mais claro */
+    --color-on-surface-variant: #FFFFFF; /* Texto nessas camadas (branco) */
+    
+    /* Cor dos Botões (Primária) - A mais clara e de destaque */
+    --color-primary: #E7E0EC; /* O roxo-acinzentado claro que tínhamos antes */
+    --color-primary-dark: #DBCDE4; /* Hover do botão (um pouco mais escuro) */
+    --color-on-primary: #5A068A; /* Texto do botão (roxo escuro, para contraste) */
+    
+    /* Cor das Bordas */
+    --color-outline: #A98EC0; /* Um roxo-cinza médio, visível no fundo escuro */
+
+
+    /* Tipografia e Espaçamento Padrão */
+    /* --- ALTERADO --- */
+    --font-family-base: 'Montserrat', sans-serif;
+    --spacing-medium: 16px;
+    --spacing-large: 24px;
+    
+    /* Animação (Sem alteração) */
+    --transition-speed: 0.2s ease-in-out;
+    
+    /* Tempo da transição de página */
+    --page-transition-time: 0.4s; 
+}
+
+/* 2. ESTILOS GLOBAIS (RESET) */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; 
+}
+
+html, body {
+    height: 100%;
+    font-family: var(--font-family-base);
+    background-color: var(--color-surface); /* Aplicado o fundo roxo */
+    color: var(--color-on-surface);       /* Aplicado o texto branco */
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* 3. ESTILOS DO LAYOUT (CABEÇALHO E RODAPÉ) */
+
+#main-header {
+    /* O Header agora é uma 'camada' acima do fundo */
+    background-color: var(--color-surface-variant); 
+    padding: var(--spacing-medium) var(--spacing-large);
+    border-bottom: 1px solid var(--color-outline);
+    /* Sombra é menos perceptível no escuro, mas pode ficar */
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05); 
+}
+
+/* Container injetado pelo layout.js */
+.header-container {
+    display: flex;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto; 
+    width: 100%; /* Garante que o container ocupe a largura */
+}
+
+#header-banner {
+    height: 40px; /* <-- Ajuste esta altura se o seu banner for maior ou menor */
+    margin-right: var(--spacing-medium);
+}
+
+.header-container h1 {
+    font-size: 1.5rem; 
+    font-weight: 400;
+    color: var(--color-on-surface); /* Garante que o título seja branco */
+}
+
+/* Este é o novo <div> que segura o botão de Voltar */
+.header-nav {
+    margin-left: auto; /* A mágica que empurra o botão para a direita */
+    padding-left: 16px; /* Um respiro caso o título cresça muito */
+}
+
+/* Regra específica para o botão de Voltar no cabeçalho */
+#home-button {
+    /* Deixa o botão mais compacto para caber no header */
+    padding: 8px 16px; 
+    
+    /* Remove o formato de pílula (100px) que os botões principais têm */
+    border-radius: 8px; 
+    
+    /* Remove o tamanho mínimo */
+    min-width: auto; 
+    
+    /* Fonte um pouco menor */
+    font-size: 0.85rem; 
+}
+
+#main-footer {
+    margin-top: auto; 
+    background-color: var(--color-surface-variant); /* Cor de 'camada' */
+    color: var(--color-on-surface-variant);      /* Texto branco */
+    text-align: center;
+    padding: var(--spacing-large);
+    font-size: 0.9rem;
+}
+
+/* 4. CONTEÚDO PRINCIPAL (Home - Menu de Botões) */
+
+main {
+    flex: 1; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: var(--spacing-large);
+}
+
+/* Estilizando a tabela como um "card" de menu (APENAS index.html) */
+table {
+    border-collapse: collapse; 
+
+    /* --- INÍCIO DA MOLDURA (CARD) --- */
+    
+    /* 1. Cor de fundo (a mesma do header/footer para criar uma "camada") */
+    background-color: var(--color-surface-variant);
+    
+    /* 2. Cantos arredondados (padrão MD3 para cards) */
+    border-radius: 16px; 
+    
+    /* 3. Espaçamento interno, para os botões não ficarem colados na borda */
+    padding: var(--spacing-large); /* Isso vai adicionar 24px de respiro */
+    
+    /* 4. Sombra para dar a sensação de "elevação" */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+
+    /* --- FIM DA MOLDURA (CARD) --- */
+}
+
+td {
+    /* Este padding cria o espaço ENTRE os botões */
+    padding: 12px;
+}
+
+a {
+    text-decoration: none;
+}
+
+
+/* 5. ESTILOS DE FORMULÁRIO (Páginas Internas) */
+
+/* O "card" ou "moldura" que segura o formulário e o código */
+.container {
+    display: flex;
+    width: 90%;
+    max-width: 1400px; /* Vindo do seu CSS antigo, bom valor */
+    
+    /* A "moldura" que você pediu */
+    background-color: var(--color-surface-variant); /* Cor de "camada" */
+    border-radius: 16px; /* Cantos arredondados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
+    
+    overflow: hidden; /* Garante que o conteúdo não vaze dos cantos */
+}
+
+/* As duas colunas: formulário e código */
+.form-section,
+.code-section {
+    flex: 1; /* Divide o espaço igualmente */
+    padding: 12px; /* --- ALTERADO --- (era 16px) */
+}
+
+/* Linha divisória */
+.form-section {
+    border-right: 1px solid var(--color-outline);
+}
+
+/* Títulos dentro das páginas (VLAN 100, Código Gerado) */
+.form-section h1,
+.code-section h1 {
+    text-align: center;
+    margin-bottom: 12px; /* --- ALTERADO --- (era 16px) */
+    font-size: 1.15rem; /* --- ALTERADO --- (era 1.25rem) */
+    font-weight: 400; 
+    color: var(--color-on-surface); 
+}
+
+/* Labels dos formulários */
+label {
+    display: block;
+    margin-bottom: 4px; /* --- ALTERADO --- (era 6px) */
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-on-surface); /* Texto branco */
+}
+
+/* Estilo dos inputs, selects e textarea */
+input[type="text"],
+select,
+textarea {
+    width: 100%;
+    padding: 8px; /* --- ALTERADO --- (era 10px) */
+    margin-bottom: 10px; /* --- ALTERADO --- (era 12px) */
+    
+    background-color: var(--color-surface); /* Fundo roxo escuro */
+    color: var(--color-on-surface); /* Texto branco */
+    border: 1px solid var(--color-outline); /* Borda sutil */
+    border-radius: 8px; /* Cantos levemente arredondados */
+    
+    font-family: var(--font-family-base); /* <- Esta linha herda "Montserrat" */
+    font-size: 0.85rem; /* --- ALTERADO --- (era 0.9rem) */
+    box-sizing: border-box; /* Importante para o width 100% */
+}
+
+/* Destaque ao focar (clicar ou Tab) */
+input[type="text"]:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--color-primary); /* Borda fica roxo-claro */
+    outline: none;
+    box-shadow: 0 0 8px rgba(231, 224, 236, 0.5); /* Brilho roxo-claro */
+}
+
+textarea {
+    height: 400px; /* Vindo do seu CSS antigo */
+    resize: vertical;
+    font-family: 'Fira Code', 'Courier New', Courier, monospace; /* Esta linha sobrescreve para 'Fira Code' */
+}
+
+/* Grupo de botões (Gerar/Limpar) */
+.button-group {
+    display: flex;
+    gap: 10px; /* Espaço entre os botões */
+    margin-top: 10px; /* --- ALTERADO --- (era 12px) */
+}
+
+/* Botões *dentro* do formulário/container */
+.container button {
+    padding: 8px 16px; /* --- ALTERADO --- (era 10px 20px) */
+    min-width: 100px; /* --- ALTERADO --- (era 120px) */
+}
+
+/* Estilo do botão "Limpar" (Secundário) */
+button.secondary {
+    /* Fundo transparente, estilo "Outlined" do MD3 */
+    background-color: transparent;
+    color: var(--color-primary); /* Texto roxo-claro */
+    border: 1px solid var(--color-primary); /* Borda roxo-claro */
+}
+
+button.secondary:hover {
+    /* Um leve fundo ao passar o mouse */
+    background-color: rgba(231, 224, 236, 0.1); /* --color-primary com 10% de opacidade */
+    border-color: var(--color-primary-dark);
+}
+
+
+/* 6. ESTILO DOS BOTÕES (Estilo "Filled Tonal" do MD3) */
+
+button {
+    padding: 12px 24px;
+    min-width: 150px;
+    
+    /* Cores atualizadas para o tema escuro */
+    background-color: var(--color-primary); /* Botão claro */
+    color: var(--color-on-primary);       /* Texto roxo escuro */
+    
+    font-family: var(--font-family-base); /* <- Esta linha herda "Montserrat" */
+    font-size: 0.9rem;
+    font-weight: 500; 
+    text-transform: none; 
+    letter-spacing: 0.5px;
+    
+    border: none;
+    border-radius: 100px; 
+    
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1); 
+    transition: background-color var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+/* Esta regra se aplica a TODOS os botões, exceto o .secondary */
+button:not(.secondary):hover {
+    background-color: var(--color-primary-dark); /* Hover do botão claro */
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15); 
+}
+
+button:focus-visible {
+    outline: 3px solid var(--color-primary-dark);
+    outline-offset: 2px;
+}
+
+button:active {
+    box-shadow: none; 
+}
+
+
+/* 7. RESPONSIVIDADE */
+
+@media (max-width: 600px) {
+    
+    .header-container h1 {
+        font-size: 1.2rem; 
+    }
+
+    #home-button {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+    }
+
+    /* --- Home (index.html) --- */
+    /* Faz os botões da home ficarem um em cima do outro */
+    table tr { /* Seletor mais específico para não afetar outras tabelas */
+        display: flex;
+        flex-direction: column;
+    }
+    
+    table td { /* Seletor mais específico */
+        padding: 8px; 
+    }
+    
+    /* Faz o botão da home ocupar 100% da largura */
+    table button { 
+        width: 100%; 
+    }
+
+    /* --- Páginas Internas (vlan-porta, vlan-100) --- */
+
+    /* Reduz o padding geral em telas menores */
+    main {
+        padding: var(--spacing-medium);
+    }
+    
+    /* Faz o container das páginas internas empilhar verticalmente */
+    .container {
+        flex-direction: column;
+        width: 100%; /* Ocupa a largura toda */
+    }
+    
+    .form-section {
+        /* Remove a borda da direita e coloca uma embaixo */
+        border-right: none;
+        border-bottom: 1px solid var(--color-outline);
+    }
+
+    .form-section,
+    .code-section {
+        padding: 12px; /* --- ALTERADO --- (era 16px) */
+    }
+}
+
+/* --- 8. TRANSIÇÕES DE PÁGINA (NOVO) --- */
+
+body {
+    /* Aplica a animação de fade-in em TODAS as páginas quando carregam */
+    animation: fadeIn var(--page-transition-time) ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Esta classe será adicionada pelo layout.js para o fade-out */
+body.fade-out {
+    opacity: 0;
+    transition: opacity var(--page-transition-time) ease-in-out;
+}
