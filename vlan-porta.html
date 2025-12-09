@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Provisionamento de ONTs</title>
+    <meta name="description" content="Gerador de script para provisionamento de VLAN de Porta">
+    <title>Provisionamento de ONTs - Vlan da Porta</title>
     
     <link rel="stylesheet" href="style.css">
-    
     <link rel="icon" type="image/png" href="favicon.png">
-
-    </head>
+</head>
 <body>
 
     <header id="main-header"></header>
@@ -21,7 +20,7 @@
                 <form id="ontForm">
                     <div>
                         <label for="olt">OLT:</label>
-                        <select id="olt" name="olt">
+                        <select id="olt" name="olt" required>
                             <option value="">Selecione a OLT</option>                            
                             <option value="HEL1">HEL1</option>
                             <option value="HEL2">HEL2</option>
@@ -33,75 +32,59 @@
 
                     <div>
                         <label for="slot">SLOT:</label>
-                        <select id="slot" name="slot">
+                        <select id="slot" name="slot" required>
                             <option value="">Selecione o Slot</option>
-                            <script>
-                                for (let i = 1; i <= 8; i++) {
-                                    document.write(`<option value="${i}">${i}</option>`);
-                                }
-                            </script>
-                        </select>
+                            </select>
                     </div>
 
                     <div>
                         <label for="porta_pon">PORTA_PON:</label>
-                        <select id="porta_pon" name="porta_pon">
+                        <select id="porta_pon" name="porta_pon" required>
                             <option value="">Selecione a Porta PON</option>
-                            <script>
-                                for (let i = 1; i <= 16; i++) {
-                                    document.write(`<option value="${i}">${i}</option>`);
-                                }
-                            </script>
-                        </select>
+                            </select>
                     </div>
 
                     <div>
                         <label for="posicao">POSICAO:</label>
-                        <select id="posicao" name="posicao">
+                        <select id="posicao" name="posicao" required>
                             <option value="">Selecione a Posição</option>
-                            <script>
-                                for (let i = 1; i <= 128; i++) {
-                                    document.write(`<option value="${i}">${i}</option>`);
-                                }
-                            </script>
-                        </select>
+                            </select>
                     </div>
 
                     <div>
                         <label for="card_veip">CARD_VEIP:</label>
-                        <select id="card_veip" name="card_veip">
+                        <select id="card_veip" name="card_veip" required>
                             <option value="">Selecione o Card VEIP</option>
-                            <option value="14">14</option>
-                            <option value="7">7</option>
-                            <option value="1">1</option>
+                            <option value="14">14 - Nokia (ALCL)</option>
+                            <option value="1">1 - Furukawa (FRKW)</option>
+                            <option value="7">7 - Outros</option>
                         </select>
                     </div>
-
                     <div>
                         <label for="fabricante">FABRICANTE:</label>
-                        <select id="fabricante" name="fabricante">
+                        <select id="fabricante" name="fabricante" required>
                             <option value="">Selecione o Fabricante</option>
-                            <option value="ALCL">ALCL:</option>
-                            <option value="ASKY">ASKY:</option>
-                            <option value="CIOT">CIOT:</option>
-                            <option value="FRKW">FRKW:</option>
-                            <option value="GPON">GPON:</option>
-                            <option value="HWTC">HWTC:</option>
-                            <option value="INVP">INVP:</option>
-                            <option value="MSTC">MSTC:</option>
-                            <option value="NBEL">NBEL:</option>
-                            <option value="PRKS">PRKS:</option>
-                            <option value="SHLN">SHLN:</option>
-                            <option value="TDTC">TDTC:</option>
-                            <option value="TLCM">TLCM:</option>
-                            <option value="VSOL">VSOL:</option>
-                            <option value="YHTC">YHTC:</option>
+                            <option value="ALCL">ALCL</option>
+                            <option value="ASKY">ASKY</option>
+                            <option value="CIOT">CIOT</option>
+                            <option value="FRKW">FRKW</option>
+                            <option value="GPON">GPON</option>
+                            <option value="HWTC">HWTC</option>
+                            <option value="INVP">INVP</option>
+                            <option value="MSTC">MSTC</option>
+                            <option value="NBEL">NBEL</option>
+                            <option value="PRKS">PRKS</option>
+                            <option value="SHLN">SHLN</option>
+                            <option value="TDTC">TDTC</option>
+                            <option value="TLCM">TLCM</option>
+                            <option value="VSOL">VSOL</option>
+                            <option value="YHTC">YHTC</option>
                         </select>
                     </div>
 
                     <div>
                         <label for="serial_gpon">SERIAL_GPON:</label>
-                        <input type="text" id="serial_gpon" name="serial_gpon" required>
+                        <input type="text" id="serial_gpon" name="serial_gpon" placeholder="Ex: 48575443..." required>
                     </div>
 
                     <div>
@@ -113,17 +96,17 @@
 
                     <div>
                         <label for="circuito">CIRCUITO:</label>
-                        <input type="text" id="circuito" name="circuito" required>
+                        <input type="text" id="circuito" name="circuito" placeholder="Número do Circuito" required>
                     </div>
 
                     <div>
                         <label for="cto">CTO:</label>
-                        <input type="text" id="cto" name="cto" required>
+                        <input type="text" id="cto" name="cto" placeholder="Número da CTO" required>
                     </div>
 
                     <div>
                         <label for="cod">COD:</label>
-                        <input type="text" id="cod" name="cod" required>
+                        <input type="text" id="cod" name="cod" placeholder="Código do Cliente" required>
                     </div>
 
                     <div class="button-group">
@@ -135,7 +118,7 @@
 
             <div class="code-section">
                 <h1>Código Gerado</h1>
-                <textarea id="generatedCode" readonly></textarea>
+                <textarea id="generatedCode" readonly placeholder="O script gerado aparecerá aqui..."></textarea>
                 <button type="button" class="primary" onclick="copyCode()">Copiar Código</button>
             </div>
         </div>
@@ -146,6 +129,7 @@
     <script src="layout.js"></script>
 
     <script>
+        // Dados das VLANs
         const vlanData = {
             MGP: [
                 { placa: 1, porta: 1, vlan: 727 }, { placa: 1, porta: 2, vlan: 728 }, { placa: 1, porta: 3, vlan: 729 }, { placa: 1, porta: 4, vlan: 730 }, { placa: 1, porta: 5, vlan: 731 }, { placa: 1, porta: 6, vlan: 732 }, { placa: 1, porta: 7, vlan: 733 }, { placa: 1, porta: 8, vlan: 734 }, { placa: 1, porta: 9, vlan: 735 }, { placa: 1, porta: 10, vlan: 736 }, { placa: 1, porta: 11, vlan: 737 }, { placa: 1, porta: 12, vlan: 738 }, { placa: 1, porta: 13, vlan: 739 }, { placa: 1, porta: 14, vlan: 740 }, { placa: 1, porta: 15, vlan: 741 }, { placa: 1, porta: 16, vlan: 742 },
@@ -188,6 +172,29 @@
             ],
         };
 
+        // Popula os selects ao carregar a página
+        document.addEventListener('DOMContentLoaded', () => {
+            populateSelect('slot', 1, 8, 'Selecione o Slot');
+            populateSelect('porta_pon', 1, 16, 'Selecione a Porta PON');
+            populateSelect('posicao', 1, 128, 'Selecione a Posição');
+            
+            // Inicializa as VLANs
+            updateVLANs();
+        });
+
+        // Função reutilizável para criar opções
+        function populateSelect(elementId, start, end, defaultText) {
+            const select = document.getElementById(elementId);
+            select.innerHTML = `<option value="">${defaultText}</option>`;
+            
+            for (let i = start; i <= end; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = i;
+                select.appendChild(option);
+            }
+        }
+
         document.getElementById('olt').addEventListener('change', updateVLANs);
         document.getElementById('slot').addEventListener('change', updateVLANs);
         document.getElementById('porta_pon').addEventListener('change', updateVLANs);
@@ -220,23 +227,25 @@
         }
 
         function generateCode() {
+            const form = document.getElementById('ontForm');
+            
+            // Validação visual nativa
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
             const olt = document.getElementById('olt').value;
             const slot = document.getElementById('slot').value;
             const portaPon = document.getElementById('porta_pon').value;
             const posicao = document.getElementById('posicao').value;
             const cardVeip = document.getElementById('card_veip').value;
             const fabricante = document.getElementById('fabricante').value;
-            const serialGpon = document.getElementById('serial_gpon').value;
+            const serialGpon = document.getElementById('serial_gpon').value.trim();
             const vlan = document.getElementById('vlan').value;
-            const circuito = document.getElementById('circuito').value;
-            const cto = document.getElementById('cto').value;
-            const cod = document.getElementById('cod').value;
-
-            // Validação simples
-            if (!olt || !slot || !portaPon || !posicao || !cardVeip || !fabricante || !serialGpon || !vlan || !circuito || !cto || !cod) {
-                alert('Por favor, preencha todos os campos do formulário.');
-                return;
-            }
+            const circuito = document.getElementById('circuito').value.trim();
+            const cto = document.getElementById('cto').value.trim();
+            const cod = document.getElementById('cod').value.trim();
 
             const code = `configure equipment ont interface 1/1/${slot}/${portaPon}/${posicao} sw-ver-pland disabled sernum ${fabricante}:${serialGpon} cvlantrans-mode local fec-up enable enable-aes enable voip-allowed veip desc1 C${circuito}-CT${cto} desc2 COD.${cod}
 configure equipment ont interface 1/1/${slot}/${portaPon}/${posicao} admin-state up
@@ -248,14 +257,13 @@ configure veip ont 1/1/${slot}/${portaPon}/${posicao}/${cardVeip}/1 admin-state 
 configure qos interface 1/1/${slot}/${portaPon}/${posicao}/${cardVeip}/1 queue 0 priority 5 weight 0 shaper-profile name:HSI_1G_DOWN
 configure qos interface 1/1/${slot}/${portaPon}/${posicao}/${cardVeip}/1 upstream-queue 0 priority 1 bandwidth-profile name:HSI_1G_UP
 configure bridge port 1/1/${slot}/${portaPon}/${posicao}/${cardVeip}/1 max-unicast-mac 4
-configure bridge port 1/1/${slot}/${portaPon}/${posicao}/${cardVeip}/1 vlan-id ${vlan} tag single-tagged
+configure bridge port 1/1/${slot}/${portaPon}/${posicao}/${cardVeip}/1 vlan-id 100 tag single-tagged l2fwder-vlan ${vlan} vlan-scope local
 exit all
 admin save
 admin software-mngt ihub database save-protected
 exit all
 show equipment ont status pon 1/1/${slot}/${portaPon} | match exact:${serialGpon}
-show equipment ont status pon 1/1/${slot}/${portaPon} | match exact:${serialGpon}
-        `;
+show equipment ont status pon 1/1/${slot}/${portaPon} | match exact:${serialGpon}`;
 
             document.getElementById('generatedCode').value = code;
         }
@@ -263,21 +271,30 @@ show equipment ont status pon 1/1/${slot}/${portaPon} | match exact:${serialGpon
         function clearForm() {
             document.getElementById('ontForm').reset();
             document.getElementById('generatedCode').value = '';
-            // Reinicia a seleção de VLANs
             const vlanSelect = document.getElementById('vlan');
             vlanSelect.innerHTML = '<option value="">Selecione a OLT primeiro</option>';
         }
 
-        function copyCode() {
-            const generatedCode = document.getElementById('generatedCode');
-            generatedCode.select();
-            generatedCode.setSelectionRange(0, 99999); // Para mobile
-            document.execCommand('copy');
-            alert('Código copiado para a área de transferência!');
-        }
+        async function copyCode() {
+            const textarea = document.getElementById('generatedCode');
+            const code = textarea.value;
 
-        // Inicializa as VLANs ao carregar a página
-        updateVLANs();
+            if (!code) {
+                alert('Gere o código primeiro!');
+                return;
+            }
+
+            try {
+                await navigator.clipboard.writeText(code);
+                alert('Código copiado para a área de transferência!');
+            } catch (err) {
+                console.error('Falha ao copiar: ', err);
+                // Fallback para navegadores antigos
+                textarea.select();
+                document.execCommand('copy');
+                alert('Código copiado (método alternativo)!');
+            }
+        }
     </script>
 </body>
 </html>
