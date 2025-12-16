@@ -6,33 +6,42 @@ document.addEventListener('DOMContentLoaded', function() {
     const footerElement = document.getElementById('main-footer');
 
     // --- FUNÇÃO AUXILIAR: NAVEGAÇÃO SUAVE ---
-    // Pega o tempo da variável CSS (0.4s) e converte para milissegundos
     const transitionTime = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--page-transition-time')) * 1000;
 
     function smoothNavigation(url) {
-        // Adiciona a classe que faz a tela sumir (fade-out)
         document.body.classList.add('fade-out');
-
-        // Espera o tempo da animação e muda de página
         setTimeout(() => {
             window.location.href = url;
         }, transitionTime);
     }
 
 
-    // --- 2. GERAÇÃO DO CABEÇALHO ---
+    // --- 2. GERAÇÃO DO CABEÇALHO E TÍTULO ---
     
     // Pega o nome do arquivo da página atual
     const currentPage = window.location.pathname.split("/").pop();
+    
+    // *** NOVA LÓGICA: DEFINIR TÍTULOS LIMPOS ***
+    const pageTitles = {
+        'index.html': 'Gerador de Script',
+        '': 'Gerador de Script', // Caso acesse a raiz sem nome de arquivo
+        'vlan-porta.html': 'Vlan da Porta',
+        'vlan-100.html': 'Vlan 100'
+    };
+
+    // Se a página atual estiver na lista, atualiza o título da aba
+    if (pageTitles[currentPage]) {
+        document.title = pageTitles[currentPage];
+    }
+    // *******************************************
+
     let homeButtonHtml = ''; 
 
     // Se NÃO for a home, cria o botão
-    // NOTA: Usamos apenas <button> aqui para manter o estilo 'secondary' do CSS
-    // O redirecionamento será feito pelo evento 'onclick' adicionado depois
     if (currentPage !== 'index.html' && currentPage !== '') {
         homeButtonHtml = `
             <button type="button" class="secondary" id="home-button">
-                Voltar à Home
+                Home
             </button>
         `;
     }
@@ -48,7 +57,6 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
     `;
 
-    // Insere o cabeçalho
     if (headerElement) {
         headerElement.innerHTML = headerContent;
     }
@@ -81,10 +89,9 @@ document.addEventListener('DOMContentLoaded', function() {
         link.addEventListener('click', function(event) {
             const href = this.getAttribute('href');
 
-            // Verifica se é um link interno válido
             if (href && !href.startsWith('#') && !href.startsWith('http') && !href.startsWith('mailto') && this.target !== '_blank') {
-                event.preventDefault(); // Impede a troca brusca de página
-                smoothNavigation(href); // Chama nossa função de transição
+                event.preventDefault(); 
+                smoothNavigation(href); 
             }
         });
     });
