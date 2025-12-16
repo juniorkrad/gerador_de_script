@@ -14,7 +14,7 @@
     --color-surface: #22003a; 
     --color-on-surface: #FFFFFF; /* Texto branco */
     
-    /* Cor das "camadas" (Header/Footer/Cards) - Um pouco mais claro que o fundo */
+    /* Cor das "camadas" (Header/Footer/Cards) - Um pouco mais clara que o fundo */
     --color-surface-variant: #3d1c53; 
     --color-on-surface-variant: #FFFFFF; 
     
@@ -365,4 +365,32 @@ body {
 body.fade-out {
     opacity: 0;
     transition: opacity var(--page-transition-time) ease-in-out;
+}
+
+/* --- 9. PERSONALIZAÇÃO DA BARRA DE ROLAGEM (SCROLLBAR) --- */
+
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-outline) var(--color-surface);
+}
+
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar {
+    width: 12px; /* Largura da barra vertical */
+    height: 12px; /* Altura da barra horizontal */
+}
+
+::-webkit-scrollbar-track {
+    background: var(--color-surface); /* Fundo da calha (track) */
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--color-surface-variant); /* Cor da barra (thumb) */
+    border-radius: 20px; /* Arredondamento */
+    border: 3px solid var(--color-surface); /* Borda para criar espaçamento */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-outline); /* Cor ao passar o mouse */
 }
