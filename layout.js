@@ -62,9 +62,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 
-    // --- 3. GERAÇÃO DO RODAPÉ ---
+    // --- 3. GERAÇÃO DO RODAPÉ (ATUALIZADO) ---
     const footerContent = `
         <p>&copy; 2025 Gerador de Script | Desenvolvido por 👤@juniorkrad + 🤖Gemini</p>
+        <p style="margin-top: 5px; font-size: 0.8em;">Todos os direitos reservados. Projeto registrado. Proibida a reprodução não autorizada.</p>
     `;
 
     if (footerElement) {
