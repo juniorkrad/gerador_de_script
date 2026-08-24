@@ -24,6 +24,7 @@
                             <option value="">Selecione a OLT</option>                            
                             <option value="HEL1">HEL1</option>
                             <option value="HEL2">HEL2</option>
+                            <option value="LTXV3">LTXV3</option> <!-- Nova OLT adicionada aqui -->
                             <option value="MGP">MGP</option>
                             <option value="PQA1">PQA1</option>
                             <option value="PSV1">PSV1</option>
@@ -132,6 +133,9 @@
     <script>
         // --- CONFIGURAÇÃO E DADOS ---
         const vlanData = {
+            LTXV3: [
+                { placa: 1, porta: 1, vlan: 1101 }, { placa: 1, porta: 2, vlan: 1102 }, { placa: 1, porta: 3, vlan: 1103 }, { placa: 1, porta: 4, vlan: 1104 }, { placa: 1, porta: 5, vlan: 1105 }, { placa: 1, porta: 6, vlan: 1106 }, { placa: 1, porta: 7, vlan: 1107 }, { placa: 1, porta: 8, vlan: 1108 }, { placa: 1, porta: 9, vlan: 1109 }, { placa: 1, porta: 10, vlan: 1110 }, { placa: 1, porta: 11, vlan: 1111 }, { placa: 1, porta: 12, vlan: 1112 }, { placa: 1, porta: 13, vlan: 1113 }, { placa: 1, porta: 14, vlan: 1114 }, { placa: 1, porta: 15, vlan: 1115 }, { placa: 1, porta: 16, vlan: 1116 },
+            ],
             MGP: [
                 { placa: 1, porta: 1, vlan: 727 }, { placa: 1, porta: 2, vlan: 728 }, { placa: 1, porta: 3, vlan: 729 }, { placa: 1, porta: 4, vlan: 730 }, { placa: 1, porta: 5, vlan: 731 }, { placa: 1, porta: 6, vlan: 732 }, { placa: 1, porta: 7, vlan: 733 }, { placa: 1, porta: 8, vlan: 734 }, { placa: 1, porta: 9, vlan: 735 }, { placa: 1, porta: 10, vlan: 736 }, { placa: 1, porta: 11, vlan: 737 }, { placa: 1, porta: 12, vlan: 738 }, { placa: 1, porta: 13, vlan: 739 }, { placa: 1, porta: 14, vlan: 740 }, { placa: 1, porta: 15, vlan: 741 }, { placa: 1, porta: 16, vlan: 742 },
                 { placa: 2, porta: 1, vlan: 743 }, { placa: 2, porta: 2, vlan: 744 }, { placa: 2, porta: 3, vlan: 745 }, { placa: 2, porta: 4, vlan: 746 }, { placa: 2, porta: 5, vlan: 747 }, { placa: 2, porta: 6, vlan: 748 }, { placa: 2, porta: 7, vlan: 749 }, { placa: 2, porta: 8, vlan: 750 }, { placa: 2, porta: 9, vlan: 751 }, { placa: 2, porta: 10, vlan: 752 }, { placa: 2, porta: 11, vlan: 753 }, { placa: 2, porta: 12, vlan: 754 }, { placa: 2, porta: 13, vlan: 755 }, { placa: 2, porta: 14, vlan: 756 }, { placa: 2, porta: 15, vlan: 757 }, { placa: 2, porta: 16, vlan: 758 },
